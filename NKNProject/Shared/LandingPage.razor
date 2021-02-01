@@ -1,0 +1,39 @@
+﻿@page "/"
+@layout EmptyLayout
+@using System.Security.Claims
+
+<header class="header">
+    <div class="container">
+        <div class="header_inner">
+            <div class="logo">NKN</div>
+            <nav>
+                <a class="nav_link" href="#">Home</a>
+                <a class="nav_link" href="/tracks">Tracks</a>
+                <a class="nav_link" href="#">About</a>
+                <AuthorizeView>
+                    <Authorized>
+                        @*@context.User.FindFirst(ClaimTypes.Name).Value*@
+                        <a class="nav_link" href="login/logout">Logout</a>
+                    </Authorized>
+                    <NotAuthorized>
+                        <a class="nav_link" href="login/microsoft?RedirectUri=/">Login</a>
+                    </NotAuthorized>
+                </AuthorizeView>
+
+            </nav>
+        </div>
+    </div>
+</header>
+
+<div class="home">
+    <div class="container">
+        <div class="home_inner">
+            <h2 class="home_suptitle">Musician, Streamer, NerdyKidNick</h2>
+            <h1 class="home_title">NerdyKidNick</h1>
+        </div>
+    </div>
+</div>
+
+@code {
+
+}
