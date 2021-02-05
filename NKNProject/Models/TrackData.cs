@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
+using MongoDB.Bson;
 
 namespace NKNProject.Models
 {
-    public class TrackData
+    public class TrackData : MongoDbEntity
     {
-        [Key]
-        public Guid TrackId { get; set; }
         public string TrackName { get; set; }
         public string TrackGenre { get; set; }
         public DateTime TrackReleaseDate { get; set; }
+        public Uri TrackImg { get; set; }
+        public string TrackLinks { get; set; }
+        public string TrackDescription { get; set; }
     }
 }
