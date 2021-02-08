@@ -4,7 +4,7 @@
 #pragma warning disable 0649
 #pragma warning disable 0169
 
-namespace NKNProject.Shared
+namespace NKNProject.Pages
 {
     #line hidden
     using System;
@@ -104,6 +104,7 @@ using NKNProject.Models;
         {
         }
         #pragma warning restore 1998
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private HttpClient Http { get; set; }
     }
 }
 #pragma warning restore 1591

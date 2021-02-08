@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using NKNProject.DataAccess;
+using NKNProject.Models;
 using System.Net.Http;
 
 namespace NKNProject
@@ -36,8 +38,11 @@ namespace NKNProject
                     opt.ClientId = Configuration["Microsoft:Id"];
                     opt.ClientSecret = Configuration["Microsoft:Secret"];
                 });
-            services.AddSingleton<HttpClient>();
-
+            services.AddScoped<HttpClient>();
+            services.AddControllers();
+            services.AddSingleton<TrackDataAccess>();
+            services.Configure<DatabaseSettings>(Configuration.GetSection(nameof(DatabaseSettings)));
+            services.AddSingleton<IDatabaseSettings>(x => x.GetRequiredService<IOptions<DatabaseSettings>>().Value);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

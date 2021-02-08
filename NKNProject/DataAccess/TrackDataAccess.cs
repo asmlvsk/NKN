@@ -1,5 +1,5 @@
-﻿using MongoDB.Driver;
-using NKNProject.Data;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using NKNProject.Models;
 using System;
 using System.Collections.Generic;
@@ -13,13 +13,20 @@ namespace NKNProject.DataAccess
 
     public class TrackDataAccess
     {
-        TrackDBContext db = new TrackDBContext();
+        private readonly IMongoCollection<TrackData> trackData;
+
+        public TrackDataAccess(IDatabaseSettings databaseSettings)
+        {
+            var client = new MongoClient(databaseSettings.ConnectionString);
+            var database = client.GetDatabase(databaseSettings.DatabaseName);
+            trackData = database.GetCollection<TrackData>("Tracks");
+        }
 
         public List<TrackData> GetAllTracks()
         {
             try
             {
-                return db.Tracks.Find(_ => true).ToList();
+                return trackData.Find(_ => true).ToList();
             }
             catch
             {
@@ -33,7 +40,7 @@ namespace NKNProject.DataAccess
         {
             try
             {
-                await db.Tracks.InsertOneAsync(track);
+                await trackData.InsertOneAsync(track);
             }
             catch
             {
@@ -47,8 +54,8 @@ namespace NKNProject.DataAccess
         {
             try
             {
-                FilterDefinition<TrackData> filterDefinition = Builders<TrackData>.Filter.Eq("TrackId", trackId);
-                return await db.Tracks.FindAsync(filterDefinition).Result.FirstOrDefaultAsync();
+                FilterDefinition<TrackData> filterDefinition = Builders<TrackData>.Filter.Eq("Id", trackId);
+                return await trackData.Find(filterDefinition).FirstOrDefaultAsync();
             }
             catch
             {
@@ -58,11 +65,11 @@ namespace NKNProject.DataAccess
         }
 
         // Update
-        public async void UpdateTrack(TrackData track)
+        public void UpdateTrack(TrackData track)
         {
             try
             {
-                await db.Tracks.ReplaceOneAsync(filter: g => g.Id == track.Id, replacement: track);
+                trackData.ReplaceOne(filter: g => g.Id == track.Id, replacement: track);
             }
             catch
             {
@@ -72,12 +79,12 @@ namespace NKNProject.DataAccess
         }
 
         // Delete
-        public async void DeleteTrack(string id)
+        public async Task<bool> DeleteTrack(string id)
         {
             try
             {
-                FilterDefinition<TrackData> filterDefinition = Builders<TrackData>.Filter.Eq("TrackId", id);
-                await db.Tracks.DeleteOneAsync(filterDefinition);
+                DeleteResult actionResult =  await trackData.DeleteOneAsync(Builders<TrackData>.Filter.Eq("Id", id));
+                return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
             }
             catch
             {

@@ -1,0 +1,40 @@
+﻿@page "/tracks"
+@inherits TracksModel
+@inject HttpClient Http
+
+<MatButton Outlined="true" @onclick="@(e => OpenDialog(false))">Add Track</MatButton>
+
+<MatTable Items="@trackList" class="mat-elevation-z5" AllowSelection="true" FilterByColumnName="TrackName" SelectionChanged="SelectionChanged">
+    <MatTableHeader>
+        <th>Name</th>
+        <th>Genre</th>
+        <th>Release Date</th>
+        <th>Track Description</th>
+    </MatTableHeader>
+    <MatTableRow>
+        <td>@context.TrackName</td>
+        <td>@context.TrackGenre</td>
+        <td>@context.TrackReleaseDate.ToShortDateString()</td>
+        <td>@context.TrackDescription</td>
+        <td>
+            <MatButton Raised="true" @onclick="@(e => OpenDialog(true))" Icon="edit" title="Edit Track"></MatButton>
+            <MatButton Raised="true" @onclick="@(async () => await DeleteTrack(context.Id))" Icon="restore_from_trash" title="Delete Track"></MatButton>
+        </td>
+    </MatTableRow>
+</MatTable>
+
+<MatDialog @bind-IsOpen="@dialogIsOpen">
+    <MatDialogTitle>Add / Edit Track</MatDialogTitle>
+    <MatDialogContent>
+        <MatTextField Label="Track Name" @bind-Value="@track.TrackName"></MatTextField>
+        <MatTextField Label="Track Genre" @bind-Value="@track.TrackGenre"></MatTextField>
+        <MatDatePicker Label="Track Release Date" @bind-Value="@track.TrackReleaseDate"></MatDatePicker>
+        @*<MatTextField Label="Track Links" @bind-Value="@track.TrackLinks"></MatTextField>*@
+        @*<MatTextField Label="Track Image" @bind-Value="@track.TrackImg"></MatTextField>*@
+        <MatTextField Label="Track Description" @bind-Value="@track.TrackDescription"></MatTextField>
+    </MatDialogContent>
+    <MatDialogActions>
+        <MatButton OnClick="OkClickAsync">Add</MatButton>
+        <MatButton OnClick="CloseModal">Close</MatButton>
+    </MatDialogActions>
+</MatDialog>

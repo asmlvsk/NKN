@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using NKNProject.DataAccess;
 using NKNProject.Models;
 using System;
@@ -12,39 +13,50 @@ namespace NKNProject.Controllers
     [ApiController]
     public class TracksController : ControllerBase
     {
-        TrackDataAccess dataAccess = new TrackDataAccess();
-        // GET: api/<TracksController>
-        public IEnumerable<TrackData> Get()
+        private readonly TrackDataAccess _dataAccess;
+        public TracksController(TrackDataAccess dataAccess)
         {
-            return dataAccess.GetAllTracks();
+            _dataAccess = dataAccess;
+        }
+        // GET: api/<TracksController>
+        public IEnumerable<TrackData> GetTracks()
+        {
+            return _dataAccess.GetAllTracks();
         }
 
         // GET api/<TracksController>/5
         [HttpGet("{id}")]
-        public async Task<TrackData> Get(string id)
+        public async Task<TrackData> GetTrack(string id)
         {
-            return await dataAccess.GetTrackData(id);
+            return await _dataAccess.GetTrackData(id) ?? new TrackData();
         }
 
         // POST api/<TracksController>
         [HttpPost]
-        public async Task PostAsync([FromBody] TrackData trackData)
+        public void AddTrack([FromBody] TrackData trackData)
         {
-            await dataAccess.AddTrack(trackData);
+            _ = _dataAccess.AddTrack(new TrackData
+            {
+                Id = trackData.Id,
+                TrackName = trackData.TrackName,
+                TrackGenre = trackData.TrackGenre,
+                TrackDescription = trackData.TrackDescription,
+                TrackReleaseDate = trackData.TrackReleaseDate
+            });
         }
 
         // PUT api/<TracksController>/5
-        [HttpPut("{id}")]
-        public void Put([FromBody] TrackData trackData)
+        [HttpPut]
+        public void UpdTrack([FromBody] TrackData trackData)
         {
-            dataAccess.UpdateTrack(trackData);
+             _dataAccess.UpdateTrack(trackData);
         }
 
         // DELETE api/<TracksController>/5
         [HttpDelete("{id}")]
-        public void Delete(string id)
+        public void DeleteTrack(string id)
         {
-            dataAccess.DeleteTrack(id);
+            _ = _dataAccess.DeleteTrack(id);
         }
     }
 }

@@ -104,7 +104,7 @@ using NKNProject.Models;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 28 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Shared\NavMenu.razor"
+#line 23 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Shared\NavMenu.razor"
        
     private bool collapseNavMenu = true;
 
