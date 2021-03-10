@@ -1,10 +1,11 @@
-using MatBlazor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using MudBlazor;
+using MudBlazor.Services;
 using NKNProject.DataAccess;
 using NKNProject.Models;
 using System.Net.Http;
@@ -26,7 +27,9 @@ namespace NKNProject
         {
             services.AddRazorPages();            
             services.AddServerSideBlazor();
-            services.AddMatBlazor();
+
+            services.AddMudServices();
+
             services.AddAuthentication("Cookies")
                 .AddCookie(opt =>
                 {
@@ -39,10 +42,15 @@ namespace NKNProject
                     opt.ClientSecret = Configuration["Microsoft:Secret"];
                 });
             services.AddScoped<HttpClient>();
+            services.AddScoped<DialogService>();
             services.AddControllers();
             services.AddSingleton<TrackDataAccess>();
+
             services.Configure<DatabaseSettings>(Configuration.GetSection(nameof(DatabaseSettings)));
             services.AddSingleton<IDatabaseSettings>(x => x.GetRequiredService<IOptions<DatabaseSettings>>().Value);
+
+            services.Configure<SpotifySettings>(Configuration.GetSection(nameof(SpotifySettings)));
+            services.AddSingleton<ISpotifySettings>(x => x.GetRequiredService<IOptions<SpotifySettings>>().Value);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

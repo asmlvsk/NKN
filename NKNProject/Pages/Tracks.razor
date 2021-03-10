@@ -1,10 +1,53 @@
 ﻿@page "/tracks"
 @inherits TracksModel
 @inject HttpClient Http
+@inject IDialogService DialogService
 
-<MatButton Outlined="true" @onclick="@(e => OpenDialog(false))">Add Track</MatButton>
+<MudButton Variant="Variant.Filled" @onclick="@(e => OpenAddDialog(true))">Add Track</MudButton>
 
-<MatTable Items="@trackList" class="mat-elevation-z5" AllowSelection="true" FilterByColumnName="TrackName" SelectionChanged="SelectionChanged">
+@if (trackList == null)
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
+}
+else
+{
+    <MudTable Items="@trackList" Dense="true" Hover="true" Filter="new Func<TrackData,bool>(FilterFunc)" >
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">Nick's tracks</MudText>
+            <MudToolBarSpacer />
+            <MudTextField @bind-Value="@searchString"
+                          Placeholder="Search"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search"
+                          IconSize="Size.Medium"
+                          Class="mt-0">
+            </MudTextField>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh>Name</MudTh>
+            <MudTh>Genre</MudTh>
+            <MudTh>Release Date</MudTh>
+            <MudTh>Track Description</MudTh>
+            <MudTh></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Name">@context.TrackName</MudTd>
+            <MudTd DataLabel="Genre">@context.TrackGenre</MudTd>
+            <MudTd DataLabel="Release Date">@context.TrackReleaseDate?.ToShortDateString()</MudTd>
+            <MudTd DataLabel="Track Description">@context.TrackDescription</MudTd>
+            <MudTd>
+                <MudIconButton Icon="@Icons.Material.Outlined.Edit" Color="Color.Primary" @onclick="@(e => OpenEditDialog(context, true))" />
+                <MudIconButton Icon="@Icons.Material.Outlined.Delete" Color="Color.Error" @onclick="@(() => DeleteTrack(context.Id))" />
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+    </MudTable>
+}
+
+
+<!--<MatTable Items="@trackList" class="mat-elevation-z5" AllowSelection="true" FilterByColumnName="TrackName" SelectionChanged="SelectionChanged">
     <MatTableHeader>
         <th>Name</th>
         <th>Genre</th>
@@ -28,13 +71,33 @@
     <MatDialogContent>
         <MatTextField Label="Track Name" @bind-Value="@track.TrackName"></MatTextField>
         <MatTextField Label="Track Genre" @bind-Value="@track.TrackGenre"></MatTextField>
-        <MatDatePicker Label="Track Release Date" @bind-Value="@track.TrackReleaseDate"></MatDatePicker>
-        @*<MatTextField Label="Track Links" @bind-Value="@track.TrackLinks"></MatTextField>*@
-        @*<MatTextField Label="Track Image" @bind-Value="@track.TrackImg"></MatTextField>*@
-        <MatTextField Label="Track Description" @bind-Value="@track.TrackDescription"></MatTextField>
+        <MatDatePicker Label="Track Release Date" @bind-Value="@track.TrackReleaseDate"></MatDatePicker>-->
+@*<MatTextField Label="Track Links" @bind-Value="@track.TrackLinks"></MatTextField>*@
+@*<MatTextField Label="Track Image" @bind-Value="@track.TrackImg"></MatTextField>*@
+<!--<MatTextField Label="Track Description" @bind-Value="@track.TrackDescription"></MatTextField>
     </MatDialogContent>
     <MatDialogActions>
         <MatButton OnClick="OkClickAsync">Add</MatButton>
         <MatButton OnClick="CloseModal">Close</MatButton>
     </MatDialogActions>
-</MatDialog>
+</MatDialog>-->
+
+@code{ 
+
+    async Task OpenAddDialog(bool _disabled)
+    {
+        disabled = _disabled;
+        var parameters = new DialogParameters { ["isAdd"] = _disabled };
+        var dialog = DialogService.Show<DialogComponent>("Add Track", parameters);
+        var result = await dialog.Result;
+
+    }
+    async Task OpenEditDialog(TrackData track, bool _disabled)
+    {
+        disabled = _disabled;
+        var parameters = new DialogParameters { ["isEdit"] = _disabled, ["track"] = track };
+        var dialog = DialogService.Show<DialogComponent>("Edit Track", parameters);
+        var result = await dialog.Result;
+    }
+
+}

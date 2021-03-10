@@ -1,15 +1,14 @@
 ﻿@page "/"
 @layout EmptyLayout
-@using System.Security.Claims
 
 <header class="header">
     <div class="container">
         <div class="header_inner">
-            <div class="logo">NKN</div>
+            <div class="logo">N<span style="color: #0094ff;">K</span>N</div>
             <nav>
                 <a class="nav_link" href="#">Home</a>
-                <a class="nav_link" href="/tracks">Tracks</a>
                 <a class="nav_link" href="#">About</a>
+                <a class="nav_link" href="/tracks">Tracks</a>
                 <AuthorizeView>
                     <Authorized>
                         @*@context.User.FindFirst(ClaimTypes.Name).Value*@
@@ -27,10 +26,19 @@
 
 <div class="home">
     <div class="container">
+
         <div class="home_inner">
-            <h2 class="home_suptitle">Musician, Streamer, NerdyKidNick</h2>
-            <h1 class="home_title">NerdyKidNick</h1>
+            <h2 class="home_suptitle">Musician, Streamer, Polyglot</h2>
+            <h1 class="home_title">NerdyKid<span style="color: #0094ff;">Nick</span></h1>
+        </div>       
+
+        <div class="home_vid">
+            <div class="home_texture"></div>
+            <video class="home_video" autoplay muted loop>
+                <source src="bg.mp4" type="video/mp4" />
+            </video>
         </div>
+
     </div>
 </div>
 
@@ -38,7 +46,7 @@
     <div class="container">
 
         <div class="section_header">
-            <h1 class="section_header_text">About me</h1>
+            <h1 class="section_title">About me</h1>
             <div class="section_text">
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever 
                 since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five 
@@ -51,19 +59,19 @@
         <div class="about">
             <div class="about_item">
                 <div class="about_img">
-                    <img src="test.jpg" width="380" alt="Alternate Text" />
+                    <img src="test.jpg" width="380" alt="Twitch" />
                 </div>
                 <div class="about_text">Twitch</div>
             </div>
             <div class="about_item">
                 <div class="about_img">
-                    <img src="test.jpg" width="380" alt="Alternate Text" />
+                    <img src="test.jpg" width="380" alt="Twitter" />
                 </div>
                 <div class="about_text">Twitter</div>
             </div>
             <div class="about_item">
                 <div class="about_img">
-                    <img src="test.jpg" width="380" alt="Alternate Text" />
+                    <img src="test.jpg" width="380" alt="Instagram" />
                 </div>
                 <div class="about_text">Instagram</div>
             </div>

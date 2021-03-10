@@ -1,0 +1,82 @@
+﻿@page "/spotify"
+@inject NavigationManager navManager
+
+<h3>SpotifyPage</h3>
+
+@if (_isAuthed && _me != null)
+{
+    <h2>Welcome @_me.DisplayName!</h2>
+    <p>
+        You have a grant total of @_totalPlaylistCount playlists!
+    </p>
+
+    <h2>@artist.Name</h2>
+    <p>@artist.Href</p>
+    <p>@artist.Followers.Total</p>
+}
+else
+{
+    <span>To get started:</span>
+    <a href="@_authUri">
+        Login via Spotify
+    </a>
+}
+
+@code {
+    ISpotifySettings spotifySettings;
+
+    private Uri _authUri;
+
+    private bool _isAuthed;
+
+    private FullArtist artist;
+
+    private PrivateUser _me;
+
+    private int? _totalPlaylistCount;
+
+    private string spotifyName;
+
+    protected override void OnInitialized()
+    {
+        var clientId = "0d92aa9d87c64448b7fcb628df6669e1";
+        var baseUri = navManager.ToAbsoluteUri(navManager.Uri);
+
+        var loginRequest = new LoginRequest(baseUri, clientId, LoginRequest.ResponseType.Token)
+        {
+            Scope = new[] { Scopes.PlaylistReadPrivate, Scopes.PlaylistReadCollaborative }
+        };
+        _authUri = loginRequest.ToUri();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var uri = new Uri(navManager.Uri);
+        var maxLen = Math.Min(1, uri.Fragment.Length);
+        Dictionary<string, string> fragmentParams = uri.Fragment.Substring(maxLen)?
+          .Split("&", StringSplitOptions.RemoveEmptyEntries)?
+          .Select(param => param.Split("=", StringSplitOptions.RemoveEmptyEntries))?
+          .ToDictionary(param => param[0], param => param[1]) ?? new Dictionary<string, string>();
+
+        _isAuthed = fragmentParams.ContainsKey("access_token");
+        if (_isAuthed)
+        {
+            var spotify = new SpotifyClient(fragmentParams["access_token"]);
+
+            _me = await spotify.UserProfile.Current();
+            _totalPlaylistCount = (await spotify.Playlists.CurrentUsers()).Total;
+            artist = await spotify.Artists.Get("1kmMLFK7dXp7dGT42soMrG");
+
+        }
+        //ISpotifySettings spotifySettings;
+        //protected override async Task OnInitializedAsync()
+        //{
+
+        //}
+        //async Task GetTrack()
+        //{
+        //    var client = new SpotifyClient(spotifySettings.ClientSecret);
+        //    var track = await client.Tracks.Get("7yNK27ZTpHew0c55VvIJgm");
+        //}
+    }
+}

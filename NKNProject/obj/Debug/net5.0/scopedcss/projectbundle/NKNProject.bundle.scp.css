@@ -27,9 +27,41 @@ body[b-yz907zhuwa]{
     justify-content: center;
     width: 100%;
     height: 100vh;
-    background: url();
+/*    background: url();
     background-color: slategrey;
-    background-size: cover;
+    background-size: cover;*/
+}
+
+.home_vid[b-yz907zhuwa]::after {
+    width: 100%;
+    height: 100%;
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to bottom, #310068, #3a5d9c);
+    opacity: .9;
+    /*background: rgba(0,0,0,0.9);*/
+    z-index: -10;
+}
+
+.home_texture[b-yz907zhuwa] {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: url(texture.png);
+    z-index: -1;
+}
+
+.home_video[b-yz907zhuwa] {   
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -10;
 }
 
 .home_inner[b-yz907zhuwa]{
@@ -94,18 +126,17 @@ body[b-yz907zhuwa]{
     display: block;
     width: 100%;
     height: 3px;
-    background-color: blueviolet;
+    background-color: #0094ff;
     position: absolute;
     top: 100%;
     left: 0;
     z-index: 1;
     opacity: 0;
-
     transition: opacity .1s linear;
 }
 
-.nav_link:hover[b-yz907zhuwa]{
-    color: blueviolet;
+.nav_link:hover[b-yz907zhuwa] {
+    color: #0094ff;
 }
 
 .nav_link:hover[b-yz907zhuwa]:after {
@@ -115,20 +146,20 @@ body[b-yz907zhuwa]{
 /*Sections*/
 
 .section[b-yz907zhuwa]{
-    padding: 80px 0;
+    padding: 150px 0;
 }
 
-.section_header[b-yz907zhuwa]{
+.section_header[b-yz907zhuwa] {
     width: 100%;
     max-width: 950px;
-    margin: 0 auto 40px;
+    margin: 0 auto 100px;
     text-align: center;
+    color: white;
 }
 
-.section_title[b-yz907zhuwa]{
+.section_title[b-yz907zhuwa] {
     font-size: 30px;
     font-weight: 700;
-    color: #333;
     text-transform: uppercase;
 }
 
@@ -140,10 +171,10 @@ body[b-yz907zhuwa]{
     justify-content: space-between;
 }
 
-.about_item[b-yz907zhuwa]{
+.about_item[b-yz907zhuwa] {
     width: 380px;
     position: relative;
-    background-color: Highlight;
+    background-color: #0353d1;
 }
 
 .about_item:hover .about_img img[b-yz907zhuwa]{
@@ -160,7 +191,7 @@ body[b-yz907zhuwa]{
 }
 
 .about_img[b-yz907zhuwa] {
-    background: linear-gradient(to bottom, #7512d7, #0353d1)
+    background: linear-gradient(to bottom, #7512d7, #0353d1);
 }
 
 .about_img img[b-yz907zhuwa]{

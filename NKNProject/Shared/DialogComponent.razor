@@ -1,0 +1,84 @@
+﻿@using NKNProject.Pages;
+@using System.Globalization
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3 mb-n1" />
+            Add / Edit Track
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField @bind-Value="@Track.TrackName" Label="Track Name" ReadOnly="false" />
+        <MudTextField @bind-Value="@Track.TrackGenre" Label="Track Genre" ReadOnly="false" />
+        <MudTextField @bind-Value="@Track.TrackDescription" Label="Track Description" ReadOnly="false" />
+        <MudDatePicker @bind-Date="@Track.TrackReleaseDate" Culture="@CultureInfo.GetCultureInfo("en-US")" Label="Track Release Date" DisableToolbar="true" HelperText="No header" />
+        @*<MudTextField Value="@Track.TrackReleaseDate" Label="Track Release Date" ReadOnly="false" />*@
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Disabled="@isEdit" OnClick="OkClickAsync" Color="Color.Success">Save</MudButton>
+        <MudButton Disabled="@isAdd" OnClick="OkClickEditedAsync" Color="Color.Success">Edited Save</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Inject] private HttpClient Http { get; set; }
+    [Inject] private ISnackbar Snackbar { get; set; }
+    [Parameter] public TrackData Track { get; set; } = new TrackData();
+    [Parameter] public bool isEdit { get; set; }
+    [Parameter] public bool isAdd { get; set; }
+    protected List<TrackData> trackList;
+    private bool disabled = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Http = new HttpClient()
+        {
+            BaseAddress = new Uri("https://localhost:44338")
+        };
+    }
+
+    public async Task GetTrack()
+    {
+        trackList = await Http?.GetJsonAsync<List<TrackData>>("/api/Tracks/");
+    }
+
+    public async void OkClickAsync()
+    {
+        if (Track != null)
+        {
+            await Http.PostJsonAsync("/api/Tracks/", Track);
+        }
+        else
+        {
+            Snackbar.Add("Error", Severity.Error);
+        }
+        StateHasChanged();
+        await GetTrack();
+        MudDialog.Close();
+    }
+
+    public async void OkClickEditedAsync()
+    {
+        if (Track != null)
+        {
+            await Http.PutJsonAsync("/api/Tracks/", Track);
+        }
+        else
+        {
+            Snackbar.Add("Error", Severity.Error);
+        }
+        StateHasChanged();
+        await GetTrack();
+        MudDialog.Close();
+    }
+
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+}

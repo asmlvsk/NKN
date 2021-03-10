@@ -84,14 +84,35 @@ using NKNProject.Shared;
 #nullable disable
 #nullable restore
 #line 11 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
-using MatBlazor;
+using NKNProject.Models;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 12 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
-using NKNProject.Models;
+using SpotifyAPI;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 13 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using SpotifyAPI.Web;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 14 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using SpotifyAPI.Web.Http;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 15 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using MudBlazor;
 
 #line default
 #line hidden
@@ -104,6 +125,31 @@ using NKNProject.Models;
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 85 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Pages\Tracks.razor"
+       
+
+    async Task OpenAddDialog(bool _disabled)
+    {
+        disabled = _disabled;
+        var parameters = new DialogParameters { ["isAdd"] = _disabled };
+        var dialog = DialogService.Show<DialogComponent>("Add Track", parameters);
+        var result = await dialog.Result;
+
+    }
+    async Task OpenEditDialog(TrackData track, bool _disabled)
+    {
+        disabled = _disabled;
+        var parameters = new DialogParameters { ["isEdit"] = _disabled, ["track"] = track };
+        var dialog = DialogService.Show<DialogComponent>("Edit Track", parameters);
+        var result = await dialog.Result;
+    }
+
+
+#line default
+#line hidden
+#nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IDialogService DialogService { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private HttpClient Http { get; set; }
     }
 }
