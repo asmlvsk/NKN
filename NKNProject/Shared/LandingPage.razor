@@ -1,13 +1,18 @@
 ﻿@page "/"
 @layout EmptyLayout
+@inject ISpotifySettings settings
+@inject SpotifyBuilder builder
+
+
+<!--Nav menu block-->
 
 <header class="header">
     <div class="container">
         <div class="header_inner">
             <div class="logo">N<span style="color: #0094ff;">K</span>N</div>
             <nav>
-                <a class="nav_link" href="#">Home</a>
-                <a class="nav_link" href="#">About</a>
+                <a class="nav_link" href="LandingPage.razor#home">Home</a>
+                <a class="nav_link" href="LandingPage.razor#section">About</a>
                 <a class="nav_link" href="/tracks">Tracks</a>
                 <AuthorizeView>
                     <Authorized>
@@ -24,13 +29,15 @@
     </div>
 </header>
 
+<!--Main block-->
+
 <div class="home">
     <div class="container">
 
         <div class="home_inner">
             <h2 class="home_suptitle">Musician, Streamer, Polyglot</h2>
             <h1 class="home_title">NerdyKid<span style="color: #0094ff;">Nick</span></h1>
-        </div>       
+        </div>
 
         <div class="home_vid">
             <div class="home_texture"></div>
@@ -42,44 +49,158 @@
     </div>
 </div>
 
+<!--About block-->
+
 <section class="section">
     <div class="container">
 
         <div class="section_header">
             <h1 class="section_title">About me</h1>
             <div class="section_text">
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever 
-                since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five 
-                centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release 
-                of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions 
-                of Lorem Ipsum.</p>
+                <p>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever
+                    since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five
+                    centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release
+                    of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions
+                    of Lorem Ipsum.
+                </p>
             </div>
         </div>
 
         <div class="about">
-            <div class="about_item">
-                <div class="about_img">
-                    <img src="test.jpg" width="380" alt="Twitch" />
+            <a href="https://www.twitch.tv/nerdykidnick" target="_blank">
+                <div class="about_item">
+                    <div class="about_img">
+                        <img src="/social media/twitch.png" width="380" alt="Twitch" />
+                    </div>
+                    <div class="about_text">Twitch</div>
                 </div>
-                <div class="about_text">Twitch</div>
-            </div>
-            <div class="about_item">
-                <div class="about_img">
-                    <img src="test.jpg" width="380" alt="Twitter" />
+            </a>
+            <a href="https://twitter.com/NerdyKidNick" target="_blank">
+                <div class="about_item">
+                    <div class="about_img">
+                        <img src="/social media/twitter.png" width="380" alt="Twitter" />
+                    </div>
+                    <div class="about_text">Twitter</div>
                 </div>
-                <div class="about_text">Twitter</div>
-            </div>
-            <div class="about_item">
-                <div class="about_img">
-                    <img src="test.jpg" width="380" alt="Instagram" />
+            </a>
+            <a href="https://www.instagram.com/NerdyKidNick/" target="_blank">
+                <div class="about_item">
+                    <div class="about_img">
+                        <img src="/social media/instagram.png" width="380" alt="Instagram" />
+                    </div>
+                    <div class="about_text">Instagram</div>
                 </div>
-                <div class="about_text">Instagram</div>
-            </div>
+            </a>
         </div>
 
     </div>
 </section>
 
+<!--Tracks block-->
+
+<div class="tracks_block">
+    @if (albums != null)
+    {
+        @foreach (var item in albums.Items)
+        {
+
+            <div class="tracks_item">
+                <a href="@item.Uri">
+                    @if (item.Images.Any())
+                    {
+                        <img class="tracks_img" src="@item.Images[0].Url" alt="Alternate Text" />
+                    }
+                    else
+                    {
+                        <img class="tracks_img" src="/texture.png" alt="Alternate Text" />
+                    }
+                    <div class="tracks_content">
+                        <div class="tracks_name">@item.Name</div>
+                        <div class="tracks_year">@item.ReleaseDate</div>
+                    </div>
+                </a>
+            </div>
+        }
+    }
+    else
+    {
+        @for (int i = 0; i < 8; i++)
+        {
+            <div class="tracks_item">
+                <img class="tracks_img" src="/texture.png" alt="Alternate Text" />
+                <div class="tracks_content">
+                    <div class="tracks_name">No spotify autorization.</div>
+                    <div class="tracks_year">Access Token Expired</div>
+                </div>
+            </div>
+
+        }
+    }
+
+
+
+</div>
+
+<!--Footer block-->
+<footer class="footer">
+    <div class="container">
+
+        <div class="footer_inner">
+            <div class="footer_block">
+                <h4 class="footer_title">Location</h4>
+                <address class="footer_address">
+                    <div>Adresss, 32423, 32423434</div>
+                    <div>234 sdfdsf, 34333LSldsfk</div>
+                </address>
+            </div>
+
+            <div class="footer_block">
+                <h4 class="footer_title">About developer</h4>
+                <address class="footer_address">
+                    <div>Hi, my name is Artem and it is my first Website.</div>
+                    <div>If you have any questions, feel free to contact with me via discord SmAiL#4188</div>
+                </address>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="copyright">
+        <div class="container">
+            <div class="copyright_text">
+                <div>Copyright (c) 2021 Smail. All rights reserved.</div>
+                <div>Made with love by SmAiL</div>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
 @code {
 
+    private readonly SpotifyBuilder _spotifyClientBuilder;
+
+    private FullArtist artist;
+
+    public Paging<SimpleAlbum> albums { get; set; }
+
+    public LandingPage(){}
+
+    public LandingPage(SpotifyBuilder spotifyClientBuilder)
+    {
+        builder = spotifyClientBuilder;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var spotify = builder.BuildClient();
+
+        var albumRequest = new ArtistsAlbumsRequest
+        {
+            Limit = 8
+        };
+
+        albums = await spotify.Result.Artists.GetAlbums(Constants.ARTIST_ID, albumRequest);
+    }
 }

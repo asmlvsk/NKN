@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -8,7 +9,11 @@ using MudBlazor;
 using MudBlazor.Services;
 using NKNProject.DataAccess;
 using NKNProject.Models;
+using SpotifyAPI.Web;
+using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using static SpotifyAPI.Web.Scopes;
 
 namespace NKNProject
 {
@@ -25,22 +30,53 @@ namespace NKNProject
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();            
+            services.AddHttpContextAccessor();
+            services.AddSingleton(SpotifyClientConfig.CreateDefault());
+            services.AddScoped<SpotifyBuilder>();
+         
             services.AddServerSideBlazor();
 
             services.AddMudServices();
 
-            services.AddAuthentication("Cookies")
-                .AddCookie(opt =>
+            services.AddAuthorization(options => 
+            {
+                options.AddPolicy("Spotify", policy =>
                 {
-                    opt.Cookie.Name = "AuthCookie";
-                })
-                .AddMicrosoftAccount(opt =>
-                {
-                    opt.SignInScheme = "Cookies";
-                    opt.ClientId = Configuration["Microsoft:Id"];
-                    opt.ClientSecret = Configuration["Microsoft:Secret"];
+                    policy.AuthenticationSchemes.Add("Spotify");
+                    policy.RequireAuthenticatedUser();
                 });
+            });
+
+            services.AddAuthentication(opt => { 
+                opt.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+            .AddCookie(opt =>
+            {
+                opt.ExpireTimeSpan = TimeSpan.FromMinutes(50);
+                //opt.Cookie.Name = "AuthCookie";
+            })
+            .AddSpotify(opt =>
+            {
+                opt.ClientId = Configuration["SpotifySettings:ClientID"];
+                opt.ClientSecret = Configuration["SpotifySettings:ClientSecret"];
+                opt.CallbackPath = "/Auth/callback";
+                opt.SaveTokens = true;
+                
+                var scopes = new List<string> {
+                    UserReadEmail, UserReadPrivate, PlaylistReadPrivate, PlaylistReadCollaborative, UserLibraryRead, UserFollowRead, UserTopRead
+                };
+                opt.Scope.Add(string.Join(",", scopes));
+            })
+            .AddMicrosoftAccount(opt =>
+            {
+                opt.SignInScheme = "Cookies";
+                opt.ClientId = Configuration["Microsoft:Id"];
+                opt.ClientSecret = Configuration["Microsoft:Secret"];
+            });
+            services.AddRazorPages(options => {
+                options.Conventions.AuthorizeFolder("/", "Spotify");
+            });
+
             services.AddScoped<HttpClient>();
             services.AddScoped<DialogService>();
             services.AddControllers();

@@ -117,8 +117,15 @@ using MudBlazor;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 16 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using NKNProject.Helpers;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/spotify")]
-    public partial class SpotifyPage : Microsoft.AspNetCore.Components.ComponentBase
+    public partial class SpotifyAlbums : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -126,69 +133,33 @@ using MudBlazor;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 25 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Pages\SpotifyPage.razor"
+#line 27 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Pages\SpotifyAlbums.razor"
        
-    ISpotifySettings spotifySettings;
+    public Paging<SimpleAlbum> albums { get; set; }
 
-    private Uri _authUri;
+    public SpotifyAlbums(){}
 
-    private bool _isAuthed;
-
-    private FullArtist artist;
-
-    private PrivateUser _me;
-
-    private int? _totalPlaylistCount;
-
-    private string spotifyName;
-
-    protected override void OnInitialized()
+    public SpotifyAlbums(SpotifyBuilder spotifyClientBuilder)
     {
-        var clientId = "0d92aa9d87c64448b7fcb628df6669e1";
-        var baseUri = navManager.ToAbsoluteUri(navManager.Uri);
-
-        var loginRequest = new LoginRequest(baseUri, clientId, LoginRequest.ResponseType.Token)
-        {
-            Scope = new[] { Scopes.PlaylistReadPrivate, Scopes.PlaylistReadCollaborative }
-        };
-        _authUri = loginRequest.ToUri();
+        builder = spotifyClientBuilder;
     }
 
     protected override async Task OnInitializedAsync()
     {
-        var uri = new Uri(navManager.Uri);
-        var maxLen = Math.Min(1, uri.Fragment.Length);
-        Dictionary<string, string> fragmentParams = uri.Fragment.Substring(maxLen)?
-          .Split("&", StringSplitOptions.RemoveEmptyEntries)?
-          .Select(param => param.Split("=", StringSplitOptions.RemoveEmptyEntries))?
-          .ToDictionary(param => param[0], param => param[1]) ?? new Dictionary<string, string>();
+        var spotify = builder.BuildClient();
 
-        _isAuthed = fragmentParams.ContainsKey("access_token");
-        if (_isAuthed)
+        var albumRequest = new ArtistsAlbumsRequest
         {
-            var spotify = new SpotifyClient(fragmentParams["access_token"]);
+            Limit = 8
+        };
+        albums = await spotify.Result.Artists.GetAlbums(Constants.ARTIST_ID, albumRequest);
 
-            _me = await spotify.UserProfile.Current();
-            _totalPlaylistCount = (await spotify.Playlists.CurrentUsers()).Total;
-            artist = await spotify.Artists.Get("1kmMLFK7dXp7dGT42soMrG");
-
-        }
-        //ISpotifySettings spotifySettings;
-        //protected override async Task OnInitializedAsync()
-        //{
-
-        //}
-        //async Task GetTrack()
-        //{
-        //    var client = new SpotifyClient(spotifySettings.ClientSecret);
-        //    var track = await client.Tracks.Get("7yNK27ZTpHew0c55VvIJgm");
-        //}
     }
 
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager navManager { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private SpotifyBuilder builder { get; set; }
     }
 }
 #pragma warning restore 1591

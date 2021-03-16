@@ -118,6 +118,13 @@ using MudBlazor;
 #line hidden
 #nullable disable
 #nullable restore
+#line 16 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using NKNProject.Helpers;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 1 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Shared\DialogComponent.razor"
 using NKNProject.Pages;
 
@@ -155,20 +162,20 @@ using System.Globalization;
     {
         Http = new HttpClient()
         {
-            BaseAddress = new Uri("https://localhost:44338")
+            BaseAddress = new Uri(Constants.BASE_ADDRESS)
         };
     }
 
     public async Task GetTrack()
     {
-        trackList = await Http?.GetJsonAsync<List<TrackData>>("/api/Tracks/");
+        trackList = await Http?.GetJsonAsync<List<TrackData>>(Constants.API_PATH);
     }
 
     public async void OkClickAsync()
     {
         if (Track != null)
         {
-            await Http.PostJsonAsync("/api/Tracks/", Track);
+            await Http.PostJsonAsync(Constants.API_PATH, Track);
         }
         else
         {
@@ -183,7 +190,7 @@ using System.Globalization;
     {
         if (Track != null)
         {
-            await Http.PutJsonAsync("/api/Tracks/", Track);
+            await Http.PutJsonAsync(Constants.API_PATH, Track);
         }
         else
         {

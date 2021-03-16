@@ -117,6 +117,13 @@ using MudBlazor;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 16 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using NKNProject.Helpers;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.LayoutAttribute(typeof(EmptyLayout))]
     [Microsoft.AspNetCore.Components.RouteAttribute("/")]
     public partial class LandingPage : Microsoft.AspNetCore.Components.ComponentBase
@@ -126,6 +133,40 @@ using MudBlazor;
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 180 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Shared\LandingPage.razor"
+       
+
+    private readonly SpotifyBuilder _spotifyClientBuilder;
+
+    private FullArtist artist;
+
+    public Paging<SimpleAlbum> albums { get; set; }
+
+    public LandingPage(){}
+
+    public LandingPage(SpotifyBuilder spotifyClientBuilder)
+    {
+        builder = spotifyClientBuilder;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var spotify = builder.BuildClient();
+
+        var albumRequest = new ArtistsAlbumsRequest
+        {
+            Limit = 8
+        };
+
+        albums = await spotify.Result.Artists.GetAlbums(Constants.ARTIST_ID, albumRequest);
+    }
+
+#line default
+#line hidden
+#nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private SpotifyBuilder builder { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ISpotifySettings settings { get; set; }
     }
 }
 #pragma warning restore 1591

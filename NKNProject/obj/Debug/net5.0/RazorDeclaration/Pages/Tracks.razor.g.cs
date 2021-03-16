@@ -117,6 +117,13 @@ using MudBlazor;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 16 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using NKNProject.Helpers;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/tracks")]
     public partial class Tracks : TracksModel
     {
@@ -126,7 +133,7 @@ using MudBlazor;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 85 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Pages\Tracks.razor"
+#line 49 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Pages\Tracks.razor"
        
 
     async Task OpenAddDialog(bool _disabled)

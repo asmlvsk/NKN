@@ -37,20 +37,20 @@
     {
         Http = new HttpClient()
         {
-            BaseAddress = new Uri("https://localhost:44338")
+            BaseAddress = new Uri(Constants.BASE_ADDRESS)
         };
     }
 
     public async Task GetTrack()
     {
-        trackList = await Http?.GetJsonAsync<List<TrackData>>("/api/Tracks/");
+        trackList = await Http?.GetJsonAsync<List<TrackData>>(Constants.API_PATH);
     }
 
     public async void OkClickAsync()
     {
         if (Track != null)
         {
-            await Http.PostJsonAsync("/api/Tracks/", Track);
+            await Http.PostJsonAsync(Constants.API_PATH, Track);
         }
         else
         {
@@ -65,7 +65,7 @@
     {
         if (Track != null)
         {
-            await Http.PutJsonAsync("/api/Tracks/", Track);
+            await Http.PutJsonAsync(Constants.API_PATH, Track);
         }
         else
         {

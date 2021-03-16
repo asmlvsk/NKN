@@ -212,6 +212,108 @@ body[b-yz907zhuwa]{
     opacity: 0;
     transition: opacity .2s linear;
 }
+
+/*Tracks Block*/
+
+.tracks_block[b-yz907zhuwa] {
+    display: flex;
+    flex-wrap: wrap;    
+}
+
+.tracks_item[b-yz907zhuwa] {
+    width: 25%;
+    height: 350px;
+    position: relative;
+    overflow: hidden;
+}
+
+.tracks_item:hover .tracks_content[b-yz907zhuwa]{
+    opacity: 1;
+}
+
+.tracks_img[b-yz907zhuwa] {
+    color: aquamarine;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    transform: translate3d(-50%, -50%, 0);
+}
+
+.tracks_content[b-yz907zhuwa]{
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(95, 25, 247, 0.50);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity .2s linear;
+}
+
+.tracks_name[b-yz907zhuwa]{
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
+    text-transform:uppercase;
+}
+
+.tracks_year[b-yz907zhuwa] {
+    font-size: 14px;
+    color: white;
+}
+
+/*Footer Block*/
+
+.footer[b-yz907zhuwa] {
+    background-color: rgba(95, 25, 247, 0.50);
+}
+
+.footer_inner[b-yz907zhuwa] {
+    padding: 70px 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.footer_block[b-yz907zhuwa]{
+    width: 50%;
+    padding: 0 15px;
+    text-align: center;
+}
+
+.footer_title[b-yz907zhuwa]{
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    text-transform:uppercase;
+}
+
+.footer_address[b-yz907zhuwa]{
+    margin-bottom: 10px;
+    line-height: 1.5;
+    font-size: 14px;
+    font-style: normal;
+    color: rgba(255, 255, 255, .5);
+}
+
+/*Footer Copyright*/
+.copyright[b-yz907zhuwa] {
+    padding: 20px 0;
+    background-color: rgba(36, 7, 99, 0.8);
+}
+
+.copyright_text[b-yz907zhuwa]{
+    text-align: center;
+    font-size: 14px;
+    color: gray;
+    line-height: 1.5;
+}
 /* _content/NKNProject/Shared/MainLayout.razor.rz.scp.css */
 .page[b-64a0hstf8v] {
     position: relative;

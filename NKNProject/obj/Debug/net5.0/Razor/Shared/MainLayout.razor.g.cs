@@ -115,6 +115,13 @@ using MudBlazor;
 #line hidden
 #nullable disable
 #nullable restore
+#line 16 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using NKNProject.Helpers;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 2 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Shared\MainLayout.razor"
 using System.Security.Claims;
 

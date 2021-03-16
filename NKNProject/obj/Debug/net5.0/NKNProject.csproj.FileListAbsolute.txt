@@ -40,10 +40,8 @@ C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\NKNProject.MvcAppl
 C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\NKNProject.RazorComponent.input.cache
 C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\RazorDeclaration\App.razor.g.cs
 C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\RazorDeclaration\Pages\Index.razor.g.cs
-C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\RazorDeclaration\Pages\SpotifyPage.razor.g.cs
 C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\RazorDeclaration\Pages\Tracks.razor.g.cs
 C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\RazorDeclaration\Shared\EmptyLayout.razor.g.cs
-C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\RazorDeclaration\Shared\LoginComponent.razor.g.cs
 C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\RazorDeclaration\Shared\SurveyPrompt.razor.g.cs
 C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\RazorDeclaration\_Imports.razor.g.cs
 C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\RazorDeclaration\Shared\LandingPage.razor.g.cs
@@ -56,10 +54,8 @@ C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\NKNProject.TagHelp
 C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\NKNProject.RazorCoreGenerate.cache
 C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\Razor\App.razor.g.cs
 C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\Razor\Pages\Index.razor.g.cs
-C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\Razor\Pages\SpotifyPage.razor.g.cs
 C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\Razor\Pages\Tracks.razor.g.cs
 C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\Razor\Shared\EmptyLayout.razor.g.cs
-C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\Razor\Shared\LoginComponent.razor.g.cs
 C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\Razor\Shared\SurveyPrompt.razor.g.cs
 C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\Razor\_Imports.razor.g.cs
 C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\Razor\Shared\LandingPage.razor.g.cs
@@ -86,4 +82,6 @@ C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\NKNProject.pdb
 C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\NKNProject.genruntimeconfig.cache
 C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\RazorDeclaration\Shared\DialogComponent.razor.g.cs
 C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\Razor\Shared\DialogComponent.razor.g.cs
-C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\NKNProject.csprojAssemblyReference.cache
+C:\Users\Admin\Desktop\NKNProject\NKNProject\bin\Debug\net5.0\AspNet.Security.OAuth.Spotify.dll
+C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\RazorDeclaration\Pages\SpotifyAlbums.razor.g.cs
+C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\Razor\Pages\SpotifyAlbums.razor.g.cs

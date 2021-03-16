@@ -9,6 +9,7 @@ using NKNProject.DataAccess;
 using MongoDB.Bson;
 using Microsoft.Extensions.Configuration;
 using MudBlazor;
+using NKNProject.Helpers;
 
 namespace NKNProject.Shared
 {
@@ -25,21 +26,21 @@ namespace NKNProject.Shared
         {
             Http = new HttpClient()
             {
-                BaseAddress = new Uri("https://localhost:44338")
+                BaseAddress = new Uri(Constants.BASE_ADDRESS)
             };
             await GetTrack();
         }
 
         public async Task GetTrack()
         {            
-            trackList = await Http?.GetJsonAsync<List<TrackData>>("/api/Tracks/");
+            trackList = await Http?.GetJsonAsync<List<TrackData>>(Constants.API_PATH);
         }
 
         protected async Task DeleteTrack(string id)
         {           
             if (track != null && track.Id != string.Empty)
             {
-                await Http.DeleteAsync("/api/Tracks/" + id);
+                await Http.DeleteAsync(Constants.API_PATH + id);
             }
             else
             {
