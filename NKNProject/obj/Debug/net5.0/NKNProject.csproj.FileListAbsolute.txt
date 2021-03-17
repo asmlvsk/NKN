@@ -85,3 +85,4 @@ C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\Razor\Shared\Dialo
 C:\Users\Admin\Desktop\NKNProject\NKNProject\bin\Debug\net5.0\AspNet.Security.OAuth.Spotify.dll
 C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\RazorDeclaration\Pages\SpotifyAlbums.razor.g.cs
 C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\Razor\Pages\SpotifyAlbums.razor.g.cs
+C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\NKNProject.csprojAssemblyReference.cache

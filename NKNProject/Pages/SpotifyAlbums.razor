@@ -14,7 +14,7 @@
                     <MudCardContent>
                         <MudText Typo="Typo.h5">@item.Name</MudText>
                         <MudText Typo="Typo.body2">@item.ReleaseDate</MudText>
-                        <MudText Typo="Typo.body2">@item.Type</MudText>
+                        <MudText Typo="Typo.body2">@item.AlbumType</MudText>
                     </MudCardContent>
                     <MudCardActions>
                         <MudIconButton Link="@item.Uri" Icon="@Icons.Material.Filled.Share" Color="Color.Default" />
@@ -23,11 +23,12 @@
             </MudItem>
         }
     </MudGrid>
+
 }
 @code {
     public Paging<SimpleAlbum> albums { get; set; }
 
-    public SpotifyAlbums(){}
+    public SpotifyAlbums() { }
 
     public SpotifyAlbums(SpotifyBuilder spotifyClientBuilder)
     {
@@ -43,6 +44,5 @@
             Limit = 8
         };
         albums = await spotify.Result.Artists.GetAlbums(Constants.ARTIST_ID, albumRequest);
-
     }
 }

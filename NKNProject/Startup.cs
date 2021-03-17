@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -19,6 +20,8 @@ namespace NKNProject
 {
     public class Startup
     {
+        private string[] _secrets = null;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -30,6 +33,15 @@ namespace NKNProject
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            _secrets = new string[]
+            {
+                Configuration["DatabaseSettings:ConnectionString"],
+                Configuration["DatabaseSettings:DatabaseName"],
+                Configuration["Microsoft:Id"],
+                Configuration["Microsoft:Secret"],
+                Configuration["SpotifySettings:ClientID"],
+                Configuration["SpotifySettings:ClientSecret"],
+            };
             services.AddHttpContextAccessor();
             services.AddSingleton(SpotifyClientConfig.CreateDefault());
             services.AddScoped<SpotifyBuilder>();
@@ -116,6 +128,15 @@ namespace NKNProject
                 endpoints.MapControllers();
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
+            });
+
+            app.Run(async (context) =>
+            {
+                foreach (string secret in _secrets)
+                {
+                    var result = string.IsNullOrEmpty(secret) ? "Null" : "Not Null";
+                    await context.Response.WriteAsync($"Secret is {result}");
+                }
             });
         }
     }

@@ -133,11 +133,11 @@ using NKNProject.Helpers;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 27 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Pages\SpotifyAlbums.razor"
+#line 28 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Pages\SpotifyAlbums.razor"
        
     public Paging<SimpleAlbum> albums { get; set; }
 
-    public SpotifyAlbums(){}
+    public SpotifyAlbums() { }
 
     public SpotifyAlbums(SpotifyBuilder spotifyClientBuilder)
     {
@@ -153,7 +153,6 @@ using NKNProject.Helpers;
             Limit = 8
         };
         albums = await spotify.Result.Artists.GetAlbums(Constants.ARTIST_ID, albumRequest);
-
     }
 
 #line default
