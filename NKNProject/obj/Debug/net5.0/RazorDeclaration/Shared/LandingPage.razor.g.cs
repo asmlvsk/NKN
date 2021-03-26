@@ -124,6 +124,13 @@ using NKNProject.Helpers;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Shared\LandingPage.razor"
+using System.Security.Claims;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.LayoutAttribute(typeof(EmptyLayout))]
     [Microsoft.AspNetCore.Components.RouteAttribute("/")]
     public partial class LandingPage : Microsoft.AspNetCore.Components.ComponentBase
@@ -134,7 +141,7 @@ using NKNProject.Helpers;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 180 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Shared\LandingPage.razor"
+#line 163 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Shared\LandingPage.razor"
        
 
     private readonly SpotifyBuilder _spotifyClientBuilder;
@@ -143,7 +150,7 @@ using NKNProject.Helpers;
 
     public Paging<SimpleAlbum> albums { get; set; }
 
-    public LandingPage(){}
+    public LandingPage() { }
 
     public LandingPage(SpotifyBuilder spotifyClientBuilder)
     {

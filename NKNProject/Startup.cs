@@ -73,7 +73,7 @@ namespace NKNProject
                 opt.ClientSecret = Configuration["SpotifySettings:ClientSecret"];
                 opt.CallbackPath = "/Auth/callback";
                 opt.SaveTokens = true;
-                
+
                 var scopes = new List<string> {
                     UserReadEmail, UserReadPrivate, PlaylistReadPrivate, PlaylistReadCollaborative, UserLibraryRead, UserFollowRead, UserTopRead
                 };

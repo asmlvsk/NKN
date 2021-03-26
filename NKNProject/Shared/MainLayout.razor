@@ -10,8 +10,8 @@
         <div class="top-row px-4">
             <AuthorizeView>
                 <Authorized>
-                    @context.User.FindFirst(ClaimTypes.Name).Value
-                    <a class="btn btn-dark" href="login/logout">Logout</a>
+                    <MudText Typo="Typo.h5">Hi, @context.User.FindFirst(ClaimTypes.Name).Value</MudText>
+                    @*<a class="btn btn-dark" href="login/logout">Logout</a>*@
                 </Authorized>
                 <NotAuthorized>
                     <a class="btn btn-light" href="login/microsoft?RedirectUri=/tracks">Login</a>

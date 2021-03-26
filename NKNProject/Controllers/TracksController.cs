@@ -19,6 +19,7 @@ namespace NKNProject.Controllers
             _dataAccess = dataAccess;
         }
         // GET: api/<TracksController>
+        [HttpGet]
         public IEnumerable<TrackData> GetTracks()
         {
             return _dataAccess.GetAllTracks();

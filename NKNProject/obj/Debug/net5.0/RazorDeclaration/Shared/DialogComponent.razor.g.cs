@@ -201,7 +201,6 @@ using System.Globalization;
         MudDialog.Close();
     }
 
-
     private void Cancel()
     {
         MudDialog.Cancel();

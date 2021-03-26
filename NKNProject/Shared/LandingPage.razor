@@ -2,7 +2,7 @@
 @layout EmptyLayout
 @inject ISpotifySettings settings
 @inject SpotifyBuilder builder
-
+@using System.Security.Claims
 
 <!--Nav menu block-->
 
@@ -11,13 +11,11 @@
         <div class="header_inner">
             <div class="logo">N<span style="color: #0094ff;">K</span>N</div>
             <nav>
-                <a class="nav_link" href="LandingPage.razor#home">Home</a>
-                <a class="nav_link" href="LandingPage.razor#section">About</a>
                 <a class="nav_link" href="/tracks">Tracks</a>
                 <AuthorizeView>
                     <Authorized>
-                        @*@context.User.FindFirst(ClaimTypes.Name).Value*@
-                        <a class="nav_link" href="login/logout">Logout</a>
+                        <a href="@context.User.FindFirst(ClaimTypes.Uri).Value" class="nav_link" >@context.User.FindFirst(ClaimTypes.Name).Value</a>
+                           @*<a class="nav_link" href="login/logout">Logout</a>*@
                     </Authorized>
                     <NotAuthorized>
                         <a class="nav_link" href="login/microsoft?RedirectUri=/">Login</a>
@@ -51,51 +49,36 @@
 
 <!--About block-->
 
-<section class="section">
-    <div class="container">
+<div class="about-container">
 
-        <div class="section_header">
-            <h1 class="section_title">About me</h1>
-            <div class="section_text">
-                <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever
-                    since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five
-                    centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release
-                    of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions
-                    of Lorem Ipsum.
-                </p>
-            </div>
-        </div>
-
-        <div class="about">
-            <a href="https://www.twitch.tv/nerdykidnick" target="_blank">
-                <div class="about_item">
-                    <div class="about_img">
-                        <img src="/social media/twitch.png" width="380" alt="Twitch" />
-                    </div>
-                    <div class="about_text">Twitch</div>
-                </div>
-            </a>
-            <a href="https://twitter.com/NerdyKidNick" target="_blank">
-                <div class="about_item">
-                    <div class="about_img">
-                        <img src="/social media/twitter.png" width="380" alt="Twitter" />
-                    </div>
-                    <div class="about_text">Twitter</div>
-                </div>
-            </a>
-            <a href="https://www.instagram.com/NerdyKidNick/" target="_blank">
-                <div class="about_item">
-                    <div class="about_img">
-                        <img src="/social media/instagram.png" width="380" alt="Instagram" />
-                    </div>
-                    <div class="about_text">Instagram</div>
-                </div>
+    <div id="twitch" class="about-container-section">
+        <div class="about-container-content">
+            <a href="https://www.twitch.tv/nerdykidnick">
+                <h1 class="about-container-text">Twitch</h1>
             </a>
         </div>
-
+        <div class="about-container-overlay"></div>
     </div>
-</section>
+
+    <div id="twitter" class="about-container-section">
+        <div class="about-container-content">
+            <a href="https://twitter.com/NerdyKidNick">
+                <h1 class="about-container-text">Twitter</h1>
+            </a>
+        </div>
+        <div class="about-container-overlay"></div>
+    </div>
+
+    <div id="instagram" class="about-container-section">
+        <div class="about-container-content">
+            <a href="https://www.instagram.com/NerdyKidNick/">
+                <h1 class="about-container-text">Instagram</h1>
+            </a>
+        </div>
+        <div class="about-container-overlay"></div>
+    </div>
+
+</div>
 
 <!--Tracks block-->
 
@@ -185,7 +168,7 @@
 
     public Paging<SimpleAlbum> albums { get; set; }
 
-    public LandingPage(){}
+    public LandingPage() { }
 
     public LandingPage(SpotifyBuilder spotifyClientBuilder)
     {

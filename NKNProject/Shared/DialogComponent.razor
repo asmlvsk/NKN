@@ -12,7 +12,7 @@
         <MudTextField @bind-Value="@Track.TrackName" Label="Track Name" ReadOnly="false" />
         <MudTextField @bind-Value="@Track.TrackGenre" Label="Track Genre" ReadOnly="false" />
         <MudTextField @bind-Value="@Track.TrackDescription" Label="Track Description" ReadOnly="false" />
-        <MudDatePicker @bind-Date="@Track.TrackReleaseDate" Culture="@CultureInfo.GetCultureInfo("en-US")" Label="Track Release Date" DisableToolbar="true" HelperText="No header" />
+        <MudDatePicker @bind-Date="@Track.TrackReleaseDate" DateFormat="dd/MM/yyyy" Culture="@CultureInfo.CurrentCulture" Label="Track Release Date" />
         @*<MudTextField Value="@Track.TrackReleaseDate" Label="Track Release Date" ReadOnly="false" />*@
     </DialogContent>
     <DialogActions>
@@ -75,7 +75,6 @@
         await GetTrack();
         MudDialog.Close();
     }
-
 
     private void Cancel()
     {
