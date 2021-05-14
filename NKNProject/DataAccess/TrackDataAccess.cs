@@ -1,8 +1,12 @@
-﻿using MongoDB.Bson;
+﻿using Microsoft.Extensions.Options;
+using MongoDB.Bson;
+using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.GridFS;
 using NKNProject.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -11,15 +15,22 @@ namespace NKNProject.DataAccess
 {
     // CRUD Options
 
-    public class TrackDataAccess
+    public class TrackDataAccess : ITrackDataAccess
     {
+        private IMongoDatabase _db;
         private readonly IMongoCollection<TrackData> trackData;
-
         public TrackDataAccess(IDatabaseSettings databaseSettings)
         {
             var client = new MongoClient(databaseSettings.ConnectionString);
             var database = client.GetDatabase(databaseSettings.DatabaseName);
+            _db = client.GetDatabase(databaseSettings.DatabaseName);
             trackData = database.GetCollection<TrackData>("Tracks");
+        }
+
+        public IMongoCollection<T> GetCollection<T>(string name)
+        {
+
+            return _db.GetCollection<T>(name);
         }
 
         public List<TrackData> GetAllTracks()
@@ -83,7 +94,7 @@ namespace NKNProject.DataAccess
         {
             try
             {
-                DeleteResult actionResult =  await trackData.DeleteOneAsync(Builders<TrackData>.Filter.Eq("Id", id));
+                DeleteResult actionResult = await trackData.DeleteOneAsync(Builders<TrackData>.Filter.Eq("Id", id));
                 return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
             }
             catch

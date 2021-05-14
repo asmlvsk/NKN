@@ -121,6 +121,13 @@ using NKNProject.Helpers;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 17 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using System.ComponentModel.DataAnnotations;
+
+#line default
+#line hidden
+#nullable disable
     public partial class SurveyPrompt : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998

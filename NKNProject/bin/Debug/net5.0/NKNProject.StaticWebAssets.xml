@@ -1,4 +1,5 @@
-﻿<StaticWebAssets Version="1.0">
-  <ContentRoot BasePath="/" Path="C:\Users\Admin\Desktop\NKNProject\NKNProject\obj\Debug\net5.0\scopedcss\bundle\" />
-  <ContentRoot BasePath="_content/MudBlazor" Path="C:\Users\Admin\.nuget\packages\mudblazor\5.0.1\build\..\staticwebassets\" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<StaticWebAssets Version="1.0">
+  <ContentRoot BasePath="/" Path="/src//NKNProject/obj/Debug/net5.0/scopedcss/bundle/" />
+  <ContentRoot BasePath="_content/MudBlazor" Path="/root/.nuget/fallbackpackages3/mudblazor/5.0.1/staticwebassets/" />
 </StaticWebAssets>

@@ -84,20 +84,55 @@ using NKNProject.Shared;
 #nullable disable
 #nullable restore
 #line 11 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
-using MatBlazor;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 12 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
 using NKNProject.Models;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Shared\LandingPage.razor"
+#line 12 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using SpotifyAPI;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 13 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using SpotifyAPI.Web;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 14 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using SpotifyAPI.Web.Http;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 15 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using MudBlazor;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 16 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using NKNProject.Helpers;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 17 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using System.ComponentModel.DataAnnotations;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 5 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Shared\LandingPage.razor"
 using System.Security.Claims;
 
 #line default
@@ -112,6 +147,41 @@ using System.Security.Claims;
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 194 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Shared\LandingPage.razor"
+       
+
+    private readonly SpotifyBuilder _spotifyClientBuilder;
+
+    private FullArtist artist;
+
+    public Paging<SimpleAlbum> albums { get; set; }
+
+    public LandingPage() { }
+
+    public LandingPage(SpotifyBuilder spotifyClientBuilder)
+    {
+        builder = spotifyClientBuilder;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var spotify = builder.BuildClient();
+
+        var albumRequest = new ArtistsAlbumsRequest
+        {
+            Limit = 8
+        };
+
+        albums = await spotify.Result.Artists.GetAlbums(Constants.ARTIST_ID, albumRequest);
+        artist = await spotify.Result.Artists.Get(Constants.ARTIST_ID);
+    }
+
+#line default
+#line hidden
+#nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private SpotifyBuilder builder { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ISpotifySettings settings { get; set; }
     }
 }
 #pragma warning restore 1591

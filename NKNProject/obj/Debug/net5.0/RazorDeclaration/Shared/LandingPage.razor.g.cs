@@ -125,6 +125,13 @@ using NKNProject.Helpers;
 #line hidden
 #nullable disable
 #nullable restore
+#line 17 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using System.ComponentModel.DataAnnotations;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 5 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Shared\LandingPage.razor"
 using System.Security.Claims;
 
@@ -141,7 +148,7 @@ using System.Security.Claims;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 163 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Shared\LandingPage.razor"
+#line 194 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Shared\LandingPage.razor"
        
 
     private readonly SpotifyBuilder _spotifyClientBuilder;
@@ -167,6 +174,7 @@ using System.Security.Claims;
         };
 
         albums = await spotify.Result.Artists.GetAlbums(Constants.ARTIST_ID, albumRequest);
+        artist = await spotify.Result.Artists.Get(Constants.ARTIST_ID);
     }
 
 #line default

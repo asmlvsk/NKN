@@ -65,7 +65,11 @@
             },
             "MongoDB.Driver": {
               "target": "Package",
-              "version": "[2.11.6, )"
+              "version": "[2.13.0-beta1, )"
+            },
+            "MongoDB.Driver.GridFS": {
+              "target": "Package",
+              "version": "[2.13.0-beta1, )"
             },
             "MudBlazor": {
               "target": "Package",

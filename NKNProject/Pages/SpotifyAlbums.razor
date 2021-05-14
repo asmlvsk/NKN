@@ -1,5 +1,6 @@
 ﻿@page "/spotify"
 @inject SpotifyBuilder builder
+@attribute [Authorize]
 
 <MudText Typo="Typo.h4">Albums</MudText>
 
@@ -23,8 +24,8 @@
             </MudItem>
         }
     </MudGrid>
-
 }
+
 @code {
     public Paging<SimpleAlbum> albums { get; set; }
 

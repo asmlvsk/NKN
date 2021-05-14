@@ -9,13 +9,14 @@
 <header class="header">
     <div class="container">
         <div class="header_inner">
-            <div class="logo">N<span style="color: #0094ff;">K</span>N</div>
+            <div class="logo">LO<span style="color: #0094ff;">G</span>O</div>
             <nav>
+                <a class="nav_link" href="/downloading">Downloading</a>
                 <a class="nav_link" href="/tracks">Tracks</a>
                 <AuthorizeView>
                     <Authorized>
-                        <a href="@context.User.FindFirst(ClaimTypes.Uri).Value" class="nav_link" >@context.User.FindFirst(ClaimTypes.Name).Value</a>
-                           @*<a class="nav_link" href="login/logout">Logout</a>*@
+                        <a href="@context.User.FindFirst(ClaimTypes.Uri).Value" class="nav_link">@context.User.FindFirst(ClaimTypes.Name).Value</a>
+                        @*<a class="nav_link" href="login/logout">Logout</a>*@
                     </Authorized>
                     <NotAuthorized>
                         <a class="nav_link" href="login/microsoft?RedirectUri=/">Login</a>
@@ -33,14 +34,14 @@
     <div class="container">
 
         <div class="home_inner">
-            <h2 class="home_suptitle">Musician, Streamer, Polyglot</h2>
-            <h1 class="home_title">NerdyKid<span style="color: #0094ff;">Nick</span></h1>
+            <h2 class="home_suptitle">Your Skills</h2>
+            <h1 class="home_title">Your<span style="color: #0094ff;">Name</span></h1>
         </div>
 
         <div class="home_vid">
             <div class="home_texture"></div>
             <video class="home_video" autoplay muted loop>
-                <source src="bg.mp4" type="video/mp4" />
+                <source src="ColorfulLights.mp4" type="video/mp4" />
             </video>
         </div>
 
@@ -80,6 +81,38 @@
 
 </div>
 
+<!--Stats Count-->
+
+<div class="tracks_stats">
+    @if (albums != null && artist != null)
+    {
+        <div class="container">
+            <div class="stat">
+                <div class="stat_item">
+                    <div class="stat_item_count">@albums.Items.Count</div>
+                    <div class="stat_item_text">Albums</div>
+                </div>
+                <div class="stat_item">
+                    <div class="stat_item_count">@artist.Followers.Total</div>
+                    <div class="stat_item_text">Followers on Spotify</div>
+                </div>
+                <div class="stat_item">
+                    <div class="stat_item_count">25</div>
+                    <div class="stat_item_text">Years Old</div>
+                </div>
+                <div class="stat_item">
+                    <div class="stat_item_count">4</div>
+                    <div class="stat_item_text">Languages</div>
+                </div>
+                <div class="stat_item">
+                    <div class="stat_item_count">3000+</div>
+                    <div class="stat_item_text">Followers on Twitch</div>
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+
 <!--Tracks block-->
 
 <div class="tracks_block">
@@ -114,15 +147,11 @@
                 <img class="tracks_img" src="/texture.png" alt="Alternate Text" />
                 <div class="tracks_content">
                     <div class="tracks_name">No spotify autorization.</div>
-                    <div class="tracks_year">Access Token Expired</div>
+                    <div class="tracks_year">OR Access Token Expired</div>
                 </div>
             </div>
-
         }
     }
-
-
-
 </div>
 
 <!--Footer block-->
@@ -130,6 +159,7 @@
     <div class="container">
 
         <div class="footer_inner">
+
             <div class="footer_block">
                 <h4 class="footer_title">Location</h4>
                 <address class="footer_address">
@@ -145,6 +175,7 @@
                     <div>If you have any questions, feel free to contact with me via discord SmAiL#4188</div>
                 </address>
             </div>
+
         </div>
 
     </div>
@@ -185,5 +216,6 @@
         };
 
         albums = await spotify.Result.Artists.GetAlbums(Constants.ARTIST_ID, albumRequest);
+        artist = await spotify.Result.Artists.Get(Constants.ARTIST_ID);
     }
 }

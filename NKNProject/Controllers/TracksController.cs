@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
 using NKNProject.DataAccess;
 using NKNProject.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace NKNProject.Controllers
@@ -42,7 +39,9 @@ namespace NKNProject.Controllers
                 TrackName = trackData.TrackName,
                 TrackGenre = trackData.TrackGenre,
                 TrackDescription = trackData.TrackDescription,
-                TrackReleaseDate = trackData.TrackReleaseDate
+                TrackReleaseDate = trackData.TrackReleaseDate,
+                TrackImg = trackData.TrackImg,
+                TrackLinks = trackData.TrackLinks
             });
         }
 
@@ -59,5 +58,6 @@ namespace NKNProject.Controllers
         {
             _ = _dataAccess.DeleteTrack(id);
         }
+
     }
 }

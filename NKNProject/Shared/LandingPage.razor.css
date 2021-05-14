@@ -212,11 +212,39 @@
     background-image: url("/socialmedia/instagram.png");
 }
 
-/*Tracks Block*/
+/*Stats Block*/
 
+.stat{
+    display: flex;
+}
+
+.stat_item{
+    flex: 1 0 0;
+    padding: 100px 25px;
+    border-left: 1px, solid, #fff;
+    text-align: center;
+    color: #fff;
+}
+
+.stat_item:last-child {
+    border-right: 1px, solid, #fff;
+}
+
+.stat_item_count{
+    font-size: 72px;
+    font-weight: bold;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+.stat_item_text{
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+/*Tracks Block*/
 .tracks_block {
     display: flex;
-    flex-wrap: wrap;    
+    flex-wrap: wrap;
 }
 
 .tracks_item {

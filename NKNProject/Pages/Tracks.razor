@@ -1,67 +1,64 @@
 ﻿@page "/tracks"
+@using System.Security.Claims
 @inherits TracksModel
 @inject HttpClient Http
-@inject IDialogService DialogService
+@attribute [Authorize]
 
-<MudButton Variant="Variant.Filled" @onclick="@(e => OpenAddDialog(true))">Add Track</MudButton>
+<AuthorizeView>
+    <Authorized>
 
-@if (trackList == null)
-{
-    <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
-}
-else
-{
-    <MudTable Items="@trackList" Dense="true" Hover="true" Filter="new Func<TrackData,bool>(FilterFunc)" >
-        <ToolBarContent>
-            <MudText Typo="Typo.h6">Nick's tracks</MudText>
-            <MudToolBarSpacer />
-            <MudTextField @bind-Value="@searchString"
-                          Placeholder="Search"
-                          Adornment="Adornment.Start"
-                          AdornmentIcon="@Icons.Material.Filled.Search"
-                          IconSize="Size.Medium"
-                          Class="mt-0">
-            </MudTextField>
-        </ToolBarContent>
-        <HeaderContent>
-            <MudTh>Name</MudTh>
-            <MudTh>Genre</MudTh>
-            <MudTh>Release Date</MudTh>
-            <MudTh>Track Description</MudTh>
-            <MudTh></MudTh>
-        </HeaderContent>
-        <RowTemplate>
-            <MudTd DataLabel="Name">@context.TrackName</MudTd>
-            <MudTd DataLabel="Genre">@context.TrackGenre</MudTd>
-            <MudTd DataLabel="Release Date">@context.TrackReleaseDate?.ToShortDateString()</MudTd>
-            <MudTd DataLabel="Track Description">@context.TrackDescription</MudTd>
-            <MudTd>
-                <MudIconButton Icon="@Icons.Material.Outlined.Edit" Color="Color.Primary" @onclick="@(e => OpenEditDialog(context, true))" />
-                <MudIconButton Icon="@Icons.Material.Outlined.Delete" Color="Color.Error" @onclick="@(() => DeleteTrack(context.Id))" />
-            </MudTd>
-        </RowTemplate>
-        <PagerContent>
-            <MudTablePager />
-        </PagerContent>
-    </MudTable>
-}
-
-@code{ 
-
-    async Task OpenAddDialog(bool _disabled)
-    {
-        disabled = _disabled;
-        var parameters = new DialogParameters { ["isAdd"] = _disabled };
-        var dialog = DialogService.Show<DialogComponent>("Add Track", parameters);
-        var result = await dialog.Result;
-
-    }
-    async Task OpenEditDialog(TrackData track, bool _disabled)
-    {
-        disabled = _disabled;
-        var parameters = new DialogParameters { ["isEdit"] = _disabled, ["track"] = track };
-        var dialog = DialogService.Show<DialogComponent>("Edit Track", parameters);
-        var result = await dialog.Result;
-    }
-
-}
+        @if (@context.User.FindFirst(ClaimTypes.Name).Value == Constants.ADMIN_ROLE_NAME || 
+             @context.User.FindFirst(ClaimTypes.Name).Value == Constants.ADMIN_ROLE_NAME2)
+        {
+            <MudButton Variant="Variant.Filled" @onclick="@(e => OpenAddDialog(true))">Add Track</MudButton>
+            @if (trackList == null)
+            {
+                <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
+            }
+            else
+            {
+                <MudTable Items="@trackList" Dense="true" Hover="true" Filter="new Func<TrackData,bool>(FilterFunc)">
+                    <ToolBarContent>
+                        <MudText Typo="Typo.h6">Nick's tracks</MudText>
+                        <MudToolBarSpacer />
+                        <MudTextField @bind-Value="@searchString"
+                                      Placeholder="Search"
+                                      Adornment="Adornment.Start"
+                                      AdornmentIcon="@Icons.Material.Filled.Search"
+                                      IconSize="Size.Medium"
+                                      Class="mt-0">
+                        </MudTextField>
+                    </ToolBarContent>
+                    <HeaderContent>
+                        <MudTh>Name</MudTh>
+                        <MudTh>Genre</MudTh>
+                        <MudTh>Release Date</MudTh>
+                        <MudTh>Track Description</MudTh>
+                        <MudTh>Track Link</MudTh>
+                        <MudTh>Track Album</MudTh>
+                        <MudTh></MudTh>
+                    </HeaderContent>
+                    <RowTemplate Context="table">
+                        <MudTd DataLabel="Name">@table.TrackName</MudTd>
+                        <MudTd DataLabel="Genre">@table.TrackGenre</MudTd>
+                        <MudTd DataLabel="Release Date">@table.TrackReleaseDate?.ToShortDateString()</MudTd>
+                        <MudTd DataLabel="Track Description">@table.TrackDescription</MudTd>
+                        <MudTd DataLabel="Track Link">@table.TrackLinks</MudTd>
+                        <MudTd DataLabel="Track Album">@table.TrackImg</MudTd>
+                        <MudTd>
+                            <MudIconButton Icon="@Icons.Material.Outlined.Edit" Color="Color.Primary" @onclick="@(e => OpenEditDialog(table, true))" />
+                            <MudIconButton Icon="@Icons.Material.Outlined.Delete" Color="Color.Error" @onclick="@(() => DeleteTrack(table.Id))" />
+                        </MudTd>
+                    </RowTemplate>
+                    <PagerContent>
+                        <MudTablePager />
+                    </PagerContent>
+                </MudTable>
+            }
+        }
+        else
+        {
+            <MudText Typo="Typo.h5">You are not administrator.</MudText>
+        }
+    </Authorized>
+</AuthorizeView>

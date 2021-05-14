@@ -1,0 +1,78 @@
+﻿@page "/downloading"
+@inject HttpClient Http
+@inject SpotifyBuilder builder
+@attribute [Authorize]
+
+<h3>DownloadingPage</h3>
+
+@if (trackList != null && albums != null)
+{
+    <MudGrid>
+        @foreach (var item in trackList)
+        {
+            <MudItem xs="12" sm="6" md="3" lg="4">
+                <MudCard>
+                    @foreach (var album in albums.Items)
+                    {
+                        if (item.TrackImg == album.Name)
+                        {
+                            <MudCardMedia Height="200" Image="@album.Images[0].Url" />
+
+                            <MudCardContent>
+                                <MudText Typo="Typo.h5">@item.TrackName</MudText>
+                                <MudText Typo="Typo.body2">Album: @item.TrackImg</MudText>
+                                <MudText Typo="Typo.body2">Genre: @item.TrackGenre</MudText>
+                                <MudText Typo="Typo.body2">Description: @item.TrackDescription</MudText>
+                            </MudCardContent>
+                            <MudCardActions>
+                                <MudIconButton Link="@album.Uri" Icon="@Icons.Material.Filled.Share" Color="Color.Default" />
+                                <MudIconButton Link="@item.TrackLinks" Icon="@Icons.Material.Filled.FileDownload" Color="Color.Default" />
+                            </MudCardActions>
+                        }
+                    }
+                </MudCard>
+            </MudItem>
+        }
+    </MudGrid>
+}
+else
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
+}
+
+@code {
+    protected List<TrackData> trackList;
+
+    public Paging<SimpleAlbum> albums { get; set; }
+
+    public DownloadingPage() { }
+
+    public DownloadingPage(SpotifyBuilder spotifyClientBuilder)
+    {
+        builder = spotifyClientBuilder;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        var spotify = builder.BuildClient();
+
+        var albumRequest = new ArtistsAlbumsRequest
+        {
+            Limit = 8
+        };
+
+        albums = await spotify.Result.Artists.GetAlbums(Constants.ARTIST_ID, albumRequest);
+
+        Http = new HttpClient()
+        {
+            BaseAddress = new Uri(Constants.BASE_ADDRESS)
+        };
+        await GetTrack();
+    }
+
+    public async Task GetTrack()
+    {
+        trackList = await Http?.GetJsonAsync<List<TrackData>>(Constants.API_PATH);
+    }
+}

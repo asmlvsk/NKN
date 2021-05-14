@@ -1,37 +1,65 @@
 ﻿@using NKNProject.Pages;
 @using System.Globalization
 
-<MudDialog>
-    <TitleContent>
-        <MudText Typo="Typo.h6">
-            <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3 mb-n1" />
-            Add / Edit Track
-        </MudText>
-    </TitleContent>
-    <DialogContent>
-        <MudTextField @bind-Value="@Track.TrackName" Label="Track Name" ReadOnly="false" />
-        <MudTextField @bind-Value="@Track.TrackGenre" Label="Track Genre" ReadOnly="false" />
-        <MudTextField @bind-Value="@Track.TrackDescription" Label="Track Description" ReadOnly="false" />
-        <MudDatePicker @bind-Date="@Track.TrackReleaseDate" DateFormat="dd/MM/yyyy" Culture="@CultureInfo.CurrentCulture" Label="Track Release Date" />
-        @*<MudTextField Value="@Track.TrackReleaseDate" Label="Track Release Date" ReadOnly="false" />*@
-    </DialogContent>
-    <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Disabled="@isEdit" OnClick="OkClickAsync" Color="Color.Success">Save</MudButton>
-        <MudButton Disabled="@isAdd" OnClick="OkClickEditedAsync" Color="Color.Success">Edited Save</MudButton>
-    </DialogActions>
-</MudDialog>
+@inject SpotifyBuilder builder
+
+<MudForm>
+    <MudDialog @bind-IsValid="@isAdd">
+        <TitleContent>
+            <MudText Typo="Typo.h6">
+                <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3 mb-n1" />
+                Add / Edit Track
+            </MudText>
+        </TitleContent>
+        <DialogContent>
+            <MudTextField T="string" @bind-Value="@Track.TrackName" Label="Track Name" ReadOnly="false" Required="true" RequiredError="Track Name is required!" />
+            <MudTextField T="string" @bind-Value="@Track.TrackGenre" Label="Track Genre" ReadOnly="false" Required="true" RequiredError="Track Genre is required!" />
+            <MudTextField T="string" @bind-Value="@Track.TrackDescription" Label="Track Description" ReadOnly="false" Required="true" RequiredError="Track description is required!" />
+            <MudDatePicker @bind-Date="@Track.TrackReleaseDate" DateFormat="dd/MM/yyyy" Culture="@CultureInfo.CurrentCulture" Label="Track Release Date" RequiredError="Track released is required!" />
+            <MudTextField T="string" @bind-Value="@Track.TrackLinks" Label="Track Link" ReadOnly="false" Required="true" RequiredError="Track link is required!" />
+            <MudItem xs="12" md="12">
+                <MudSelect T="string" HelperText="Choose album" @bind-Value="@Track.TrackImg">
+                    @if (albums != null)
+                    {
+                        @foreach (var state in albums.Items)
+                        {
+                            <MudSelectItem T="string" Value="@state.Name">@state.Name</MudSelectItem>
+                        }
+                    }
+                </MudSelect>
+            </MudItem>
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="Cancel">Cancel</MudButton>
+            <MudButton Disabled="@isEdit" OnClick="OkClickAsync" Color="Color.Success">Add</MudButton>
+            <MudButton Disabled="@isAdd" OnClick="OkClickEditedAsync" Color="Color.Success">Save</MudButton>
+        </DialogActions>
+    </MudDialog>
+</MudForm>
+
+
 
 @code {
+
+    [Parameter] public TrackData Track { get; set; } = new TrackData();
+
 
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
     [Inject] private HttpClient Http { get; set; }
     [Inject] private ISnackbar Snackbar { get; set; }
-    [Parameter] public TrackData Track { get; set; } = new TrackData();
+
     [Parameter] public bool isEdit { get; set; }
     [Parameter] public bool isAdd { get; set; }
     protected List<TrackData> trackList;
-    private bool disabled = false;
+    public Paging<SimpleAlbum> albums { get; set; }
+    //bool success = false;
+
+    public DialogComponent(){}
+
+    public DialogComponent(SpotifyBuilder spotifyClientBuilder)
+    {
+        builder = spotifyClientBuilder;
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -39,7 +67,27 @@
         {
             BaseAddress = new Uri(Constants.BASE_ADDRESS)
         };
+        var spotify = builder.BuildClient();
+
+        var albumRequest = new ArtistsAlbumsRequest
+        {
+            Limit = 50
+        };
+
+        albums = await spotify.Result.Artists.GetAlbums(Constants.ARTIST_ID, albumRequest);
+
+        //if (!success)
+        //{
+        //    isAdd = false;
+        //    isEdit = false;
+        //}
+        //else
+        //{
+        //    isAdd = true;
+        //    isEdit = true;
+        //}
     }
+
 
     public async Task GetTrack()
     {
@@ -50,6 +98,7 @@
     {
         if (Track != null)
         {
+            //await TrackAccess.StoreImage(Track);
             await Http.PostJsonAsync(Constants.API_PATH, Track);
         }
         else

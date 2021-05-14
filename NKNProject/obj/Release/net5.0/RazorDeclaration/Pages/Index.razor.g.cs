@@ -84,14 +84,49 @@ using NKNProject.Shared;
 #nullable disable
 #nullable restore
 #line 11 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
-using MatBlazor;
+using NKNProject.Models;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 12 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
-using NKNProject.Models;
+using SpotifyAPI;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 13 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using SpotifyAPI.Web;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 14 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using SpotifyAPI.Web.Http;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 15 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using MudBlazor;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 16 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using NKNProject.Helpers;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 17 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using System.ComponentModel.DataAnnotations;
 
 #line default
 #line hidden

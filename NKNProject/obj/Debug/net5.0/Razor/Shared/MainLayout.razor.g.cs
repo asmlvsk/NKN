@@ -122,6 +122,13 @@ using NKNProject.Helpers;
 #line hidden
 #nullable disable
 #nullable restore
+#line 17 "C:\Users\Admin\Desktop\NKNProject\NKNProject\_Imports.razor"
+using System.ComponentModel.DataAnnotations;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 2 "C:\Users\Admin\Desktop\NKNProject\NKNProject\Shared\MainLayout.razor"
 using System.Security.Claims;
 
